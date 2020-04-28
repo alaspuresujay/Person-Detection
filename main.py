@@ -2,11 +2,7 @@ import cv2
 import time
 import sendmail
 import os
-import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-buzzer = 23
-GPIO.setup(buzzer,GPIO.OUT)
+
 detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 cam = cv2.VideoCapture(0)
 sendmail.setEmail("Sender_Address", "Sender_Password", "Receiver_Address")
@@ -42,9 +38,7 @@ while True:
             image_name.append('images/' + str(x) + str(y) + '_faces.jpg')
         print(len(image_name), image_name)
         prevnum = num
-        GPIO.output(buzzer,True)
         sendmail.sendEmail(image_name, num, 'faces_detected.jpg')
-        GPIO.output(buzzer,False)
         flag = False
         # time.sleep(1)
 
